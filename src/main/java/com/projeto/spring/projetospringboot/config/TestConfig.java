@@ -3,9 +3,11 @@ package com.projeto.spring.projetospringboot.config;
 import java.time.Instant;
 import java.util.Arrays;
 
+import com.projeto.spring.projetospringboot.entities.Category;
 import com.projeto.spring.projetospringboot.entities.Order;
 import com.projeto.spring.projetospringboot.entities.User;
 import com.projeto.spring.projetospringboot.entities.enums.OrderStatus;
+import com.projeto.spring.projetospringboot.repositories.CategoryRepository;
 import com.projeto.spring.projetospringboot.repositories.OrderRepository;
 import com.projeto.spring.projetospringboot.repositories.UserRepository;
 
@@ -24,8 +26,18 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository; 
+
     @Override
     public void run(String... args) throws Exception {
+
+        Category c1 = new Category(null, "Notebook");
+        Category c2 = new Category(null, "Smathphone");
+        Category c3 = new Category(null, "Monitor");
+
+        categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
+
 
         User u1 = new User(null, "Maria Brown", "maria@gmail.com", "98888888", "123456");
         User u2 = new User(null, "Alex Green", "alex@gmail.com", "97777777", "123456");
