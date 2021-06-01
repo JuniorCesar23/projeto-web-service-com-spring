@@ -6,6 +6,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projeto.spring.projetospringboot.entities.pk.OrderItemPK;
 
 @Entity
@@ -13,7 +14,7 @@ import com.projeto.spring.projetospringboot.entities.pk.OrderItemPK;
 public class OrderItem implements Serializable {
     
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
@@ -31,6 +32,7 @@ public class OrderItem implements Serializable {
 
 
     // GETTERS E SETTERS
+    @JsonIgnore
     public Order getOrder(){
         return id.getOrder();
     }
