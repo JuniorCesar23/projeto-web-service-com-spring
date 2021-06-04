@@ -1,6 +1,7 @@
 package com.projeto.spring.projetospringboot.services;
 
 import com.projeto.spring.projetospringboot.repositories.UserRepository;
+import com.projeto.spring.projetospringboot.services.exceptions.ResourcesNotAfoundException;
 import com.projeto.spring.projetospringboot.entities.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserService {
 
     public User findbyId(Long id){
         Optional<User> obj = userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourcesNotAfoundException(id));
     }
 
     public User insert(User obj){
