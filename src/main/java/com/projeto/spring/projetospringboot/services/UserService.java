@@ -1,10 +1,13 @@
 package com.projeto.spring.projetospringboot.services;
 
 import com.projeto.spring.projetospringboot.repositories.UserRepository;
+import com.projeto.spring.projetospringboot.services.exceptions.DatabaseException;
 import com.projeto.spring.projetospringboot.services.exceptions.ResourcesNotAfoundException;
 import com.projeto.spring.projetospringboot.entities.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +33,13 @@ public class UserService {
     }
 
     public void delete(Long id){
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourcesNotAfoundException(id);
+        } catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
     
 
